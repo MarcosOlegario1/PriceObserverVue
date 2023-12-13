@@ -52,7 +52,8 @@ function reactiveItem(id)
     axios({
         method: 'PUT',
         url: 'http://127.0.0.1:8000/api/objects/' + id,
-        headers: {responseType: 'application/json'},
+        headers: {"Content-Type": 'application/json'},
+        responseType: "json",
         data: {
             status: 1, 
         }

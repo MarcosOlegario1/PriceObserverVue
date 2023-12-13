@@ -1,6 +1,6 @@
 <template>
     <TransitionRoot as="template" :show="open">
-      <Dialog as="div" class="relative z-10" @close="open = false">
+      <Dialog as="div" class="relative z-10" @close="$emit('close')">
         <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
           <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </TransitionChild>
@@ -28,20 +28,20 @@
                                     <div class="col-span-full">
                                     <label for="street-address" class="block text-sm font-medium leading-6 text-gray-900">Site</label>
                                     <div class="mt-2">
-                                        <input type="text" name="street-address" id="street-address" autocomplete="street-address" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="https://www.google.com.br"/>
+                                        <input type="text" v-model="_form.url" name="street-address" id="street-address" autocomplete="street-address" class="block required:border-red-500 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="https://www.google.com.br"/>
                                     </div>
                                     </div>
                                     <div class="col-span-full">
                                     <label for="street-address" class="block text-sm font-medium leading-6 text-gray-900">Referência</label>
                                     <div class="mt-2">
-                                        <input type="text" name="street-address" id="street-address" autocomplete="street-address" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="//*[@id='blocoValores']/div[2]/div[1]/div/h4" />
+                                        <input type="text" v-model="_form.reference" name="street-address" id="street-address" autocomplete="street-address" class="block required:border-red-500 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="//*[@id='blocoValores']/div[2]/div[1]/div/h4" />
                                     </div>
                                     </div>
                                     <!-- Description -->
                                     <div class="col-span-full">
                                         <label for="about" class="block text-sm font-medium leading-6 text-gray-900">Descrição</label>
                                         <div class="mt-2">
-                                            <textarea id="about" maxlength="50" name="about" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Uma pequena descrição para você saber qual é o produto." />
+                                            <textarea id="about" v-model="_form.description" maxlength="50" name="about" rows="3" class="block required:border-red-500 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Uma pequena descrição para você saber qual é o produto." />
                                         </div>
                                     </div>
 
@@ -63,14 +63,14 @@
                                     <div class="col-span-full">
                                     <label for="telephone" class="block text-sm font-medium leading-6 text-gray-900">Telefone</label>
                                     <div class="mt-2">
-                                        <input type="text" name="telephone" id="telephone" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="+55 11 9 0123-4567"/>
+                                        <input type="text" v-model="_form.number" name="telephone" id="telephone" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="+55 11 9 0123-4567"/>
                                     </div>
                                     </div>
 
                                     <div class="sm:col-span-full">
                                     <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Endereço de E-mail</label>
                                     <div class="mt-2">
-                                        <input id="email" name="email" type="email" autocomplete="email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="john@walker.com.br"/>
+                                        <input id="email" v-model="_form.mail" name="email" type="email" autocomplete="email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="john@walker.com.br"/>
                                     </div>
                                     </div>
 
@@ -114,8 +114,8 @@
                   </div>
                 </div>
                 <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-                    <button type="button" class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-1" @click="open = false">Deactivate</button>
-                    <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-2 sm:mt-0" @click="open = false" ref="cancelButtonRef">Cancel</button>
+                    <button type="button" class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-1" @click="submitForm()">Enviar</button>
+                    <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-2 sm:mt-0" @click="$emit('close')" ref="cancelButtonRef">Cancel</button>
                 </div>
               </DialogPanel>
             </TransitionChild>
@@ -126,12 +126,47 @@
   </template>
 
 <script setup>
-import { createApp } from 'vue'
 import { ref } from 'vue'
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import axios from 'axios';
 
-const app = createApp({})
-const open = ref(true)
+const props = defineProps(['open'])
+const emit = defineEmits(['close'])
+
+let _form = ref({
+  description:  '',
+  url:          '',
+  reference:    '',
+  mail:         '',
+});
+
+function submitForm()
+{
+  Object.values(_form).forEach(element => {
+      if(element == '')
+      {
+        return
+      }
+    });
+
+  try{
+    axios({
+      method: 'POST',
+      url: 'http://127.0.0.1:8000/api/objects/',
+      headers: { responseType: 'application/json' },
+      data: _form
+    }).then(() => {
+      emit('close')
+    }).catch((e) => {
+      console.log('Erro na requisição:');
+      console.log(e);
+    });
+  }catch(e){
+    console.log('Erro ao tentar cadastrar item:');
+    console.log(e);
+  }
+  
+}
 
 </script>
 

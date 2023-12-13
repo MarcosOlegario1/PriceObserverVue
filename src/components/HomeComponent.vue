@@ -17,8 +17,8 @@
                                     Desativar
                                 </button>        
                             </div>
-                            <div @click="isOpenCreateModal = !isOpenCreateModal" class="absolute z-1 right-2 top-0 flex h-12 items-center space-x-3 bg-whitesmoke sm:right-2">
-                                <button type="button" class="inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                            <div  class="absolute z-1 right-2 top-0 flex h-12 items-center space-x-3 bg-whitesmoke sm:right-2">
+                                <button @click="isOpenCreateModal = true" type="button" class="inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                                     Adicionar
                                     <PlusIcon class="-mr-0.5 h-5 w-5" aria-hidden="true" />
                                 </button>
@@ -63,21 +63,20 @@
                                             {{ item.lastUpdate }}
                                         </td>
                                         <td class="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3 text-start">
-                                            <a href="#" @click="isOpenEditModal = !isOpenEditModal" class="text-indigo-600 hover:text-indigo-900">
+                                            <a href="#" @click="openTheModal(item.id)" class="text-indigo-600 hover:text-indigo-900">
                                             Editar
                                             </a>
                                         </td>
-                                        <div :class="[item.value]"></div>
                                     </tr>
                                 </tbody>
                             </table>
 
                             <div>
                                 <div v-if="isOpenCreateModal">
-                                    <CreateModal />
+                                    <CreateModal :open="isOpenCreateModal" @close="isOpenCreateModal = false"/>
                                 </div>
                                 <div v-if="isOpenEditModal">
-                                    <EditModal />
+                                    <EditModal :open="isOpenEditModal" :id="idItem" @close="isOpenEditModal = false"/>
                                 </div>
                             </div>
                         </div>
@@ -96,13 +95,15 @@ import EditModal from './Modal/EditModal.vue';
 import { CheckCircleIcon, PlusIcon  } from '@heroicons/vue/20/solid'
 import { formatISO } from 'date-fns'
 
-
 let item = ref([]);
 let isOpenCreateModal = ref(false);
 let isOpenEditModal = ref(false);
 let failUpdateItems = ref([]);
 
-function checkValue(newValue, oldValue){
+let idItem = ref(null)
+
+function checkValue(newValue, oldValue)
+{
     switch (newValue, oldValue){
         case(newValue < oldValue):
             return 'bg-green-50 ring-green-600/20';
@@ -131,9 +132,10 @@ function disableItems(itemsSelecteds)
             axios({
                 method: 'PUT',
                 url: 'http://127.0.0.1:8000/api/objects/' + items[i],
-                headers: {responseType: 'application/json'},
+                headers: {"Content-Type": 'application/json'},
+                responseType: "json",
                 data: {
-                    status: 0, 
+                    status: 0,
                 }
             }).then(function (response){
                 item.value = [];
@@ -183,6 +185,13 @@ function listItems()
         console.log("Erro ao pegar os itens:");
         console.log(e);
     });
+}
+
+function openTheModal(id)
+{
+    idItem.value = id;
+
+    isOpenEditModal = !isOpenEditModal;
 }
 
 
