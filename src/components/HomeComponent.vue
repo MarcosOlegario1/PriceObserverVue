@@ -99,8 +99,7 @@ let item = ref([]);
 let isOpenCreateModal = ref(false);
 let isOpenEditModal = ref(false);
 let failUpdateItems = ref([]);
-
-let idItem = ref(null)
+let idItem = ref(null);
 
 function checkValue(newValue, oldValue)
 {
@@ -192,7 +191,6 @@ function openTheModal(id)
     idItem.value = id;
 
 }
-
 
 onBeforeMount(() => {
     listItems();

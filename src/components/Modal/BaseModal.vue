@@ -154,7 +154,7 @@ function submitForm()
       method: 'POST',
       url: 'http://127.0.0.1:8000/api/objects/',
       headers: { responseType: 'application/json' },
-      data: _form
+      data: _form.value
     }).then(() => {
       emit('close')
     }).catch((e) => {
@@ -167,7 +167,6 @@ function submitForm()
   }
   
 }
-
 </script>
 
 <style scoped>

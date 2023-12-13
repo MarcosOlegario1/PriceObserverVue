@@ -41,7 +41,7 @@
                                     <div class="col-span-full">
                                         <label for="about" class="block text-sm font-medium leading-6 text-gray-900">Descrição</label>
                                         <div class="mt-2">
-                                            <textarea id="about" maxlength="50" name="about" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Uma pequena descrição para você saber qual é o produto." />
+                                            <textarea id="about" v-model="_form.description" maxlength="50" name="about" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Uma pequena descrição para você saber qual é o produto." />
                                         </div>
                                     </div>
 
@@ -114,7 +114,7 @@
                   </div>
                 </div>
                 <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-                    <button type="button" class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-1" @click="">Deactivate</button>
+                    <button type="button" class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-1" @click="updateItem()">Salvar</button>
                     <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-2 sm:mt-0" @click="$emit('close')" ref="cancelButtonRef">Cancel</button>
                 </div>
               </DialogPanel>
@@ -134,7 +134,6 @@ const id = defineProps(['id', 'open']);
 const emit = defineEmits(['close'])
 
 let _form = ref({
-  id:          '', 
   description: '',
   url:         '',
   reference:   '',
@@ -156,6 +155,26 @@ onBeforeMount(() => {
   });
 
 })
+
+function updateItem(){
+  console.log(_form)
+
+  axios({
+    method:       'PUT',
+    url:          'http://127.0.0.1:8000/api/objects/' + id.id,
+    headers: {"Content-Type": 'application/json'},
+    responseType: "json",
+    data: _form.value
+  })
+  .then((response) => {
+    console.log(response)
+    emit('close')
+  })
+  .catch((e) => {
+    console.log("Erro ao pegar informações do item:");
+    console.log(e);
+  });
+}
 
 </script>
 
