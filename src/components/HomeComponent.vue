@@ -63,7 +63,7 @@
                                             {{ item.lastUpdate }}
                                         </td>
                                         <td class="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3 text-start">
-                                            <a href="#" @click="openTheModal(item.id)" class="text-indigo-600 hover:text-indigo-900">
+                                            <a href="#" @click="isOpenEditModal = !isOpenEditModal; openTheModal(item.id)" class="text-indigo-600 hover:text-indigo-900">
                                             Editar
                                             </a>
                                         </td>
@@ -191,7 +191,6 @@ function openTheModal(id)
 {
     idItem.value = id;
 
-    isOpenEditModal = !isOpenEditModal;
 }
 
 
