@@ -18,7 +18,9 @@
           <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
         </router-link>
         <div class="flex flex-1 justify-end">
-          <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+          <router-link to="/login" class="text-sm font-semibold leading-6 text-gray-900">Log in</router-link>
+          <a href="#" class="text-sm font-semibold leading-6 text-gray-900"> / </a>
+          <router-link to="/register" class="text-sm font-semibold leading-6 text-gray-900">Register</router-link>
         </div>
       </nav>
       <!-- Mobile Menu Below -->
@@ -38,6 +40,7 @@
             </router-link>
             <div class="flex flex-1 justify-end">
               <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+              <a href="#" class="text-sm font-semibold leading-6 text-gray-900">register</a>
             </div>
           </div>
           <div class="mt-6 space-y-2">
@@ -55,7 +58,9 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
 
 const navigation = [
   { name: 'Home', to: '/' },
-  { name: 'Historico', to: '/history' }
+  { name: 'Historico', to: '/history' },
+  { name: 'Login', to: '/login' },
+  { name: 'Registro', to: '/register' }
 ]
 
 const mobileMenuOpen = ref(false)
